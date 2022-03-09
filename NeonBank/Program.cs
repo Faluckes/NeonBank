@@ -6,28 +6,69 @@ namespace NeonBank
     {
         static void Main(string[] args)
         {
-
             try
             {
-                CurrentAccount conta1 = new CurrentAccount(32131, 312321);
-                CurrentAccount conta2 = new CurrentAccount(321, 345789);
-
-                // conta1.Transferir(10000, conta2);
-                conta1.Sacar(10000);
+                LoadAccounts();
             }
-            catch(FinancialOperationException ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-
-                Console.WriteLine("Informações da INNER EXCEPTION (exceção interna):");
-                Console.WriteLine(ex.InnerException.Message);
-                Console.WriteLine(ex.InnerException.StackTrace);
+                Console.WriteLine("Catch no metodo main");
             }
 
 
 
             Console.ReadLine();
+        }
+        private static void LoadAccounts()
+        {
+            using (FileReader leitor = new FileReader("Teste.txt"))
+            {
+                leitor.ReadNextLine();
+            }
+
+
+
+
+            //----------------------------------------------
+            //FileReader leitor = null;
+            //try
+            //{
+            //    new FileReader("contas.txt");
+            //    leitor.ReadNextLine();
+            //    leitor.ReadNextLine();
+            //    leitor.ReadNextLine();
+            //}
+
+            //catch (IOException)
+            //{
+            //    Console.WriteLine("Exceção do tipo IOException capturada e tratada!");
+            //}
+            //finally
+            //{
+            //    Console.WriteLine("Executando o Finally");
+            //    if (leitor != null)
+            //    {
+            //        leitor.Close();
+            //    }
+            //}
+
+        }
+
+        private static void TestaInnerException()
+        {
+            try
+            {
+                CurrentAccount conta1 = new CurrentAccount(40, 30);
+                CurrentAccount conta2 = new CurrentAccount(4230, 4230);
+
+                // conta1.Transferir(10000, conta2);
+                conta1.Sacar(10000);
+            }
+            catch (FinancialOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
         }
         //Teste com a cadeia de chamada:
         //Metodo -> TestaDivisao -> Dividir
@@ -63,7 +104,6 @@ namespace NeonBank
                 Console.WriteLine($"Erro no cáuculo {ex.Message}");
                 throw;
             }
-
         }
     }
 }
